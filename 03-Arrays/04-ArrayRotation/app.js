@@ -14,3 +14,16 @@ function rotateArray(array, rotation) {
   }
   console.log(array.join(" "));
 }
+
+function rotateArray1(array1, rotate1) {
+  let rotationArrayTest;
+  if (rotate1 > array1.length) {
+    rotationArrayTest = array1.splice(0, rotate1 % array1.length);
+  } else {
+    rotationArrayTest = array1.splice(0, rotate1);
+  }
+  array1.push(...rotationArrayTest);
+  console.log(array1);
+}
+
+rotateArray1(["1", "2", "3", "4", "2"]);
