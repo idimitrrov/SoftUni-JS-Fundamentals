@@ -1,21 +1,8 @@
-/* 05. Tseam Account - https://judge.softuni.bg/Contests/1256/Arrays-Exercise
+/* 07. Spiral Matrix - https://judge.softuni.bg/Contests/1256/Arrays-Exercise
 
-As a gamer, Peter has Tseam Account. He loves to buy new games. 
-You are given Peter's account with all of his games-> strings, separated by space. 
-Until you receive "Play!" you will be receiving commands which Peter does with his account.
-You may receive the following commands:
-•	Install {game} - add the game at the last position in the account,
-but only if it isn't installed already.
-•	Uninstall {game} - delete the game if it exists.
-•	Update {game} - update the game if it exists and place it in the last position.
-•	Expansion {game}-{expansion} - check  if the game exists and insert after it the expansion in the 
-following format: "{game}:{expansion}";
-
-•	On the first input line you will receive Peter`s account - a sequence of game names, separated by space.
-•	Until you receive "Play!" you will be receiving commands. 
-
-•	As output, you must print Peter`s Tseam account. 
-
+Write a function that generates a Spirally filled matrix with numbers, with given dimensions.
+The input comes as 2 numbers that represent the dimension of the matrix. 
+The output is the matrix filled spirally starting from 1. You need to print every row on a new line, with the cells separated by a space. Check the examples below.
 */
 
 function generateSpiralMatrix(rows, columns) {

@@ -1,66 +1,60 @@
-/* 05. Tseam Account - https://judge.softuni.bg/Contests/1256/Arrays-Exercise
+/* 08. Diagonal Attack - https://judge.softuni.bg/Contests/1256/Arrays-Exercise
+Write a function that reads a given matrix of numbers, and checks if  both main diagonals have an equal sum. 
+If they have, set every element that is NOT part of the main diagonals to that sum, alternatively just print the matrix unchanged.
 
-As a gamer, Peter has Tseam Account. He loves to buy new games. 
-You are given Peter's account with all of his games-> strings, separated by space. 
-Until you receive "Play!" you will be receiving commands which Peter does with his account.
-You may receive the following commands:
-•	Install {game} - add the game at the last position in the account,
-but only if it isn't installed already.
-•	Uninstall {game} - delete the game if it exists.
-•	Update {game} - update the game if it exists and place it in the last position.
-•	Expansion {game}-{expansion} - check  if the game exists and insert after it the expansion in the 
-following format: "{game}:{expansion}";
+The input comes as an array of strings. Each element represents a string of numbers, with spaces between them. 
 
-•	On the first input line you will receive Peter`s account - a sequence of game names, separated by space.
-•	Until you receive "Play!" you will be receiving commands. 
+Parse it into a matrix of numbers, so you can work with it.
 
-•	As output, you must print Peter`s Tseam account. 
+The output is either the new matrix, with all cells not belonging to a main diagonal changed to the diagonal sum, 
+or the original matrix if the two diagonals have different sums. You need to print every row on a new line, with cells separated by a space. Check the examples below. 
 
 */
 
-function generateSpiralMatrix(rows, columns) {
-  let matrix = Array(rows)
-    .fill()
-    .map(() => Array(columns).fill(0));
-  let top = 0;
-  let bottom = rows - 1;
-  let left = 0;
-  let right = columns - 1;
-  let direction = "right";
-  let num = 1;
+function generateDiagonals(matrix) {
+  let parsedArrayOfArrays = [];
+  let firstDiagonalSum = 0;
+  let secondDiagonalSum = 0;
 
-  while (top <= bottom && left <= right) {
-    if (direction === "right") {
-      for (let i = left; i <= right; i++) {
-        matrix[top][i] = num++;
+  // Taking input of strings and parsing them to numbers
+  for (let i = 0; i < matrix.length; i++) {
+    parsedArrayOfArrays.push(
+      matrix[i].split(" ").map((item) => {
+        return parseInt(item);
+      })
+    );
+  }
+  // Calculating first diagonal sum
+  for (let j = 0; j < parsedArrayOfArrays.length; j++) {
+    firstDiagonalSum += parsedArrayOfArrays[j][j];
+  }
+  // Calculating second diagonal sum
+  for (
+    let k = parsedArrayOfArrays.length - 1, l = 0;
+    k >= 0 && l < parsedArrayOfArrays.length;
+    l++, k--
+  ) {
+    secondDiagonalSum += parsedArrayOfArrays[k][l];
+  }
+  // Checking and filling all apart from diagonals with sum
+  if (firstDiagonalSum === secondDiagonalSum) {
+    for (let i = 0; i < parsedArrayOfArrays.length; i++) {
+      for (let j = 0; j < parsedArrayOfArrays[i].length; j++) {
+        if (i !== j && i + j !== parsedArrayOfArrays.length - 1) {
+          parsedArrayOfArrays[i][j] = secondDiagonalSum;
+        }
       }
-      direction = "down";
-      top++;
-    } else if (direction === "down") {
-      for (let i = top; i <= bottom; i++) {
-        matrix[i][right] = num++;
-      }
-      direction = "left";
-      right--;
-    } else if (direction === "left") {
-      for (let i = right; i >= left; i--) {
-        matrix[bottom][i] = num++;
-      }
-      direction = "up";
-      bottom--;
-    } else if (direction === "up") {
-      for (let i = bottom; i >= top; i--) {
-        matrix[i][left] = num++;
-      }
-      direction = "right";
-      left++;
     }
   }
 
-  // Print out the matrix
-  for (let i = 0; i < rows; i++) {
-    console.log(matrix[i].join(" "));
+  // Print the output in the required format
+  for (let i = 0; i < parsedArrayOfArrays.length; i++) {
+    let row = "";
+    for (let j = 0; j < parsedArrayOfArrays[i].length; j++) {
+      row += parsedArrayOfArrays[i][j] + " ";
+    }
+    console.log(row.trim());
   }
 }
 
-generateSpiralMatrix(5, 5);
+generateDiagonals(["1 1 1", "1 1 1", "1 1 0"]);
