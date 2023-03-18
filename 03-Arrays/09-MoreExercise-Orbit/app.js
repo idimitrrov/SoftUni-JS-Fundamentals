@@ -10,71 +10,37 @@ After which you must set the values of the next surrounding cells to 3 and so on
 
 */
 
-function buildOrbits(input) {
-  // create empty matrix
-  let width = input[0];
-  let height = input[1];
-  let x = input[2];
-  let y = input[3];
+function createOrbits([width, height, x, y]) {
+  // Create variable for result matrix
   const matrix = [];
 
-  // Fill matrix with rows
-  for (let i = 0; i < height; i++) {
-    matrix.push(new Array(width).fill(0));
+  // Initialize matrix with initial values
+  for (let rowIndex = 0; rowIndex < height; rowIndex++) {
+    const row = Array(width).fill(0);
+    matrix.push(row);
   }
-  // Set star position and initial orbit
+
+  // Initial position of star
   matrix[y][x] = 1;
-  let orbitValue = 2;
 
-  // Set cells in orbits
-  while (true) {
-    let cellsModified = false;
-    for (let i = 0; i < height; i++) {
-      for (let j = 0; j < width; j++) {
-        if (matrix[i][j] === orbitValue - 1) {
-          // check surrounding cells and set to orbitValue if zero
-          if (i > 0 && matrix[i - 1][j] === 0) {
-            matrix[i - 1][j] = orbitValue;
-            cellsModified = true;
-          }
-          if (i < height - 1 && matrix[i + 1][j] === 0) {
-            matrix[i + 1][j] = orbitValue;
-            cellsModified = true;
-          }
-          if (j > 0 && matrix[i][j - 1] === 0) {
-            matrix[i][j - 1] = orbitValue;
-            cellsModified = true;
-          }
-          if (j < width - 1 && matrix[i][j + 1] === 0) {
-            matrix[i][j + 1] = orbitValue;
-            cellsModified = true;
-          }
-          if (i > 0 && j > 0 && matrix[i - 1][j - 1] === 0) {
-            matrix[i - 1][j - 1] = orbitValue;
-            cellsModified = true;
-          }
-          if (i < height - 1 && j > 0 && matrix[i + 1][j - 1] === 0) {
-            matrix[i + 1][j - 1] = orbitValue;
-            cellsModified = true;
-          }
-          if (i > 0 && j < width - 1 && matrix[i - 1][j + 1] === 0) {
-            matrix[i - 1][j + 1] = orbitValue;
-            cellsModified = true;
-          }
-          if (i < height - 1 && j < width - 1 && matrix[i + 1][j + 1] === 0) {
-            matrix[i + 1][j + 1] = orbitValue;
-            cellsModified = true;
-          }
-        }
-      }
+  // Make orbits
+  for (let cellColumnIndex = 0; cellColumnIndex < height; cellColumnIndex++) {
+    for (let cellRowIndex = 0; cellRowIndex < width; cellRowIndex++) {
+      const distX = Math.abs(cellColumnIndex - x) + 1;
+      const distY = Math.abs(cellRowIndex - y) + 1;
+      const cellDist = Math.max(distX, distY);
+
+      matrix[cellColumnIndex][cellRowIndex] = cellDist;
     }
-    if (!cellsModified) {
-      break;
-    }
-    orbitValue++;
   }
-
-  // format and return matrix
-  console.log(matrix.map((row) => row.join(" ")).join("\n"));
+  function printMatrix(matrix) {
+    for (let rowIndex = 0; rowIndex < matrix.length; rowIndex++) {
+      const row = matrix[rowIndex];
+      console.log(row.join(" "));
+    }
+  }
+  // Print result matrix
+  printMatrix(matrix);
 }
-buildOrbits([5, 5, 2, 2]);
+
+createOrbits([4, 4, 0, 0]);
