@@ -15,11 +15,8 @@ If you receive Upgrade command, you should check if the equipment exists and ins
 
 function printGladiatorInventory([inventory, ...commands]) {
   let inventoryArray = inventory.split(" ");
-  // console.log(inventoryArray);
-  // console.log(commands[0].split(" "));
   for (let i = 0; i < commands.length; i++) {
     let currentCommand = commands[i].split(" ");
-    // console.log(currentCommand[0]);
     if (currentCommand[0] === "Buy") {
       let item = currentCommand[1];
       if (!inventory.includes(item)) {
@@ -45,10 +42,11 @@ function printGladiatorInventory([inventory, ...commands]) {
     if (currentCommand[0] === "Upgrade") {
       let itemUpgrade = currentCommand[1];
       let item = itemUpgrade.split("-")[0];
-      let upgrade = item + ":" + itemUpgrade.split("-")[1];
+      // let upgrade = item + ":" + itemUpgrade.split("-")[1];
+      let upgrade = itemUpgrade.split("-")[1];
       if (inventory.includes(item)) {
         let indexOfItem = inventoryArray.findIndex((el) => el === item);
-        inventoryArray.splice(indexOfItem + 1, 0, upgrade);
+        inventoryArray.splice(indexOfItem + 1, 0, `${item}:${upgrade}`);
       }
     }
   }
